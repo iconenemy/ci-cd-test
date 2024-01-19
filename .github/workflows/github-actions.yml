@@ -23,6 +23,12 @@ jobs:
         node-varsion: [20.x]
 
     steps:
+      - name: Use Node.js ${{ matrix.node-varsion }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-varsion }}
+          cache: 'yarn'
+
       - name: Check out the repository to the runner
         uses: actions/checkout@v4
 
@@ -32,12 +38,6 @@ jobs:
       - name: Run the hooks
         run: |
           ./*.sh
-
-      - name: Use Node.js ${{ matrix.node-varsion }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-varsion }}
-          cache: 'yarn'
 
       - name: Install dependencies
         run: yarn --frozen-lockfile
