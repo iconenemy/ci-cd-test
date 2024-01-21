@@ -40,7 +40,7 @@ jobs:
           ./*.sh
 
       - name: Install dependencies
-        run: yarn --frozen-lockfile
+        run: yarn
 
       - name: Lint code
         run: yarn lint
