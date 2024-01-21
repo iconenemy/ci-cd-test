@@ -1,0 +1,44 @@
+name: GitHub Actions
+
+on:
+  pull_request:
+    branches:
+      - "main"
+      - "develop"
+
+jobs:
+  init:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./scripts
+
+    strategy:
+      matrix:
+        node-varsion: [20.x]
+
+    steps:
+      - name: Use Node.js ${{ matrix.node-varsion }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-varsion }}
+
+      - name: Check out the repository to the runner
+        uses: actions/checkout@v4
+
+      - name: Make the hooks files executable
+        run: chmod +x *.sh
+
+      - name: Run the hooks
+        run: |
+          ./pre-commit.sh
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Lint code
+        run: yarn lint
+
+      - name: Run project
+        run: yarn build
