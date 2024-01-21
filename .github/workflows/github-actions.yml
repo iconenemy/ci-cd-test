@@ -27,7 +27,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-varsion }}
-          cache: 'yarn'
 
       - name: Check out the repository to the runner
         uses: actions/checkout@v4
